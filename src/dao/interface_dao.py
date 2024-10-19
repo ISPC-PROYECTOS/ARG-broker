@@ -20,3 +20,15 @@ class DataAccessDAO(ABC):
     @abstractmethod
     def eliminar(self, id):
         pass
+
+    @abstractmethod
+    def obtener_tipo_inversor(self, tipo_inversor):
+        pass
+
+    @abstractmethod
+    def insertar_inversor(self, id_tipo_inversor, cuit_o_cuil, nombre, apellido, email, contrasena, saldo_inicial):
+        pass
+
+    @abstractmethod
+    def obtener_inversor_por_email(self, email):
+        pass
