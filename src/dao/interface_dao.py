@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class DataAccessDAO(ABC):
     @abstractmethod
-    def obtener(self, id):
+    def obtener(self,cuit_o_cuil):
         pass
 
     @abstractmethod
