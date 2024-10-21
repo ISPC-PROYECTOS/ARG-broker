@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class DataAccessDAO(ABC):
     @abstractmethod
-    def obtener(self,cuit_o_cuil):
+    def obtener(self, cuit_o_cuil):
         pass
 
     @abstractmethod
@@ -31,4 +31,8 @@ class DataAccessDAO(ABC):
 
     @abstractmethod
     def obtener_inversor_por_email(self, email):
+        pass
+
+    @abstractmethod
+    def calcular_saldo_cuenta(self, cuit_o_cuil):
         pass

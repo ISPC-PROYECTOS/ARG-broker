@@ -4,7 +4,7 @@ class Portafolio():
         self.__saldo_inicial = saldo_inicial
         self.__saldo_cuenta = saldo_inicial
         self.__transacciones = []
-        self.__rendimiento= rendimiento
+        self.__rendimiento= rendimiento if rendimiento is not None else 0
 
     def get_estado(self):
         return self.__estado
@@ -27,25 +27,21 @@ class Portafolio():
     def get_transacciones(self):
         return self.__transacciones
     
-    def get__rendimiento(self):
+    def get_rendimiento(self):
         return self.__rendimiento
 
-    def set__rendimiento(self,rendimiento):
+    def set_rendimiento(self,rendimiento):
         self.__rendimiento=rendimiento
 
-        
     def mostrar_saldo_cuenta(self):
-        
         return f"Saldo de la cuenta: {self.__saldo_cuenta}"
 
     def mostrar_transacciones(self):
-        
         return f"Transacciones: {self.__transacciones}"
 
     def calcular_rendimiento(self, suma_precio_venta, suma_precio_compra):
         rendimiento = suma_precio_venta - suma_precio_compra
-        return rendimiento
+        return self.__rendimiento
     
-    def mostrar_rendieminto(self):
+    def mostrar_rendimiento(self):
         return f"Su rendimiento actual es: {self.__rendimiento}"
-        
