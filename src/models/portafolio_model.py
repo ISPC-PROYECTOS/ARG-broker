@@ -33,6 +33,9 @@ class Portafolio():
     def set__rendimiento(self,rendimiento):
         self.__rendimiento=rendimiento
 
+    def calcular_saldo_cuenta(self, suma_transacciones):
+        self.__saldo_cuenta = self.__saldo_inicial + suma_transacciones
+        return self.__saldo_cuenta
         
     def mostrar_saldo_cuenta(self):
         
@@ -42,9 +45,22 @@ class Portafolio():
         
         return f"Transacciones: {self.__transacciones}"
 
-    def calcular_rendimiento(self, suma_precio_venta, suma_precio_compra):
-        rendimiento = suma_precio_venta - suma_precio_compra
-        return rendimiento
+    def calcular_rendimiento(self, transacciones_con_precios):
+        rendimiento_total = 0
+        for transaccion in transacciones_con_precios:
+            cantidad_acciones = transaccion['cantidad_acciones_transaccion']
+            valor_transaccion = transaccion['valor_transaccion']
+            precio_actual = transaccion['precio_actual']
+            tipo_transaccion = transaccion['tipo_transaccion']
+
+            if tipo_transaccion == "compra":
+                rendimiento_accion = (precio_actual - valor_transaccion) * cantidad_acciones
+            elif tipo_transaccion == "venta":
+                rendimiento_accion = (valor_transaccion - precio_actual) * cantidad_acciones
+
+            rendimiento_total += rendimiento_accion
+
+        return rendimiento_total
     
     def mostrar_rendieminto(self):
         return f"Su rendimiento actual es: {self.__rendimiento}"
