@@ -1,5 +1,5 @@
 from datetime import date
-from interface_dao import DataAccessDAO
+from src.dao.interface_dao import DataAccessDAO
 
 class InversorDAO(DataAccessDAO):
     def __init__(self, connection):

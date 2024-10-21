@@ -1,8 +1,8 @@
 import mysql.connector
-from util.validaciones import validar_cuit_o_cuil, validar_nombre_o_apellido, validar_email, validar_contrasena, validar_tipo_persona
-from models.inversor_model import Invesor
-from util.conexion_bd import obtener_conexion
-from dao.inversor_dao import InversorDAO
+from src.util.validaciones import validar_cuit_o_cuil, validar_nombre_o_apellido, validar_email, validar_contrasena, validar_tipo_persona
+from src.models.inversor_model import Inversor
+from src.util.conexion_bd import obtener_conexion
+from src.dao.inversor_dao import InversorDAO
 
 def solicitar_dato(mensaje, validacion, mensaje_error):
     dato = input(mensaje)
@@ -16,9 +16,9 @@ def registrar_inversor():
     cuit_o_cuil = int(solicitar_dato('Ingresa el CUIT o CUIL: ', validar_cuit_o_cuil,
                                      'El dato ingresado es incorrecto, debe contener 11 dígitos sin espacios ni guiones.'))
     nombre = solicitar_dato('Ingresa el nombre: ', validar_nombre_o_apellido,
-                            'El dato ingresado es incorrecto, debe contener solo letras.').lower()
+                            'El dato ingresado es incorrecto, debe contener solo letras.').capitalize()
     apellido = solicitar_dato('Ingresa el apellido: ', validar_nombre_o_apellido,
-                              'El dato ingresado es incorrecto, debe contener solo letras.').lower()
+                              'El dato ingresado es incorrecto, debe contener solo letras.').capitalize()
     email = solicitar_dato('Ingrese el email: ', validar_email,
                            'El dato ingresado es incorrecto, inténtelo nuevamente.').lower()
     contrasena = solicitar_dato('Ingrese la contraseña, mínimo 8 caracteres, minúsculas, mayúsculas, números y caracteres especiales: ', validar_contrasena,
