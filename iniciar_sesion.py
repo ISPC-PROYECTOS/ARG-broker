@@ -1,6 +1,6 @@
-from inversor_dao import InversorDAO
-from conexion_bd import obtener_conexion
-from validaciones import validar_email, validar_contrasena
+from src.dao.inversor_dao import InversorDAO
+from util.conexion_bd import obtener_conexion
+from util.validaciones import validar_email, validar_contrasena
 from registrar_inversor import solicitar_dato
 
 def iniciar_sesion():
