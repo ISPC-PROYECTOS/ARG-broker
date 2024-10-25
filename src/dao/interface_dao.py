@@ -2,10 +2,6 @@ from abc import ABC, abstractmethod
 
 class DataAccessDAO(ABC):
     @abstractmethod
-    def obtener(self, cuit_o_cuil):
-        pass
-
-    @abstractmethod
     def obtener_todos(self):
         pass
 
@@ -34,5 +30,17 @@ class DataAccessDAO(ABC):
         pass
 
     @abstractmethod
-    def calcular_saldo_cuenta(self, cuit_o_cuil):
+    def obtener_transacciones(self, cuit_o_cuil):
+        pass
+
+    @abstractmethod
+    def obtener_suma_transacciones(self, cuit_o_cuil):
+        pass
+
+    @abstractmethod
+    def calcular_rendimiento_total(self, cuit_o_cuil):
+        pass
+
+    @abstractmethod
+    def obtener_cotizaciones(self):
         pass
