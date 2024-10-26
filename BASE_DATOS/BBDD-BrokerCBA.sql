@@ -57,7 +57,8 @@ CREATE TABLE IF NOT EXISTS `BrokerCBA`.`accion` (
   `simbolo_accion` VARCHAR(45) NULL,
   PRIMARY KEY (`id_accion`))
 ENGINE = InnoDB;
-
+ALTER TABLE `BrokerCBA`.`accion`  
+ADD cantidad_disponible INT;
 
 -- -----------------------------------------------------
 -- Table `BrokerCBA`.`cotizacion`
