@@ -31,17 +31,12 @@ class PortafolioDAO(DataAccessDAO):
                     'valor_transaccion': row[6]
                 })
             
-            if transacciones:
-                portafolio = Portafolio()
-                portafolio.mostrar_transacciones(transacciones)
-                return portafolio
-            return None
+            return transacciones if transacciones else None
         except mysql.connector.Error as error:
             raise error
         finally:
             cursor.close()
 
-    
     def obtener_suma_transacciones(self, cuit_o_cuil):
         cursor = self.connection.cursor()
         try:
@@ -68,8 +63,8 @@ class PortafolioDAO(DataAccessDAO):
         cursor = self.connection.cursor()
         try:
             query = """
-                SELECT t.id_cotizacion_accion, t.cantidad_acciones_transaccion, 
-                       t.valor_transaccion, t.tipo_transaccion, c.precio_actual
+                SELECT t.id_cotizacion_accion, t.cantidad_acciones_transaccion,
+                       t.valor_transaccion, c.precio_venta, c.precio_compra
                 FROM brokercba.transaccion t
                 INNER JOIN brokercba.cotizacion c ON t.id_cotizacion_accion = c.id_cotizacion_accion
                 WHERE t.cuit_o_cuil = %s
@@ -83,16 +78,40 @@ class PortafolioDAO(DataAccessDAO):
                     'id_cotizacion_accion': row[0],
                     'cantidad_acciones_transaccion': row[1],
                     'valor_transaccion': row[2],
-                    'tipo_transaccion': row[3],
-                    'precio_actual': row[4]
+                    'precio_venta': row[3],
+                    'precio_compra': row[4]
                 })
 
             portafolio = Portafolio()
-            rendimiento_total = portafolio.calcular_rendimiento(transacciones)
-            print(f"Rendimiento total del portafolio: {rendimiento_total}")
-            return rendimiento_total
+            rendimiento_total, rendimiento_porcentual = portafolio.calcular_rendimiento(transacciones)
+            print(f"Rendimiento total del portafolio: {rendimiento_total:.2f}")
+            print(f"Rendimiento porcentual del portafolio: {rendimiento_porcentual:.2f}%")           
+            return rendimiento_total, rendimiento_porcentual
         except mysql.connector.Error as error:
             raise error
         finally:
             cursor.close()
 
+    def obtener_todos(self):
+        pass
+
+    def crear(self, objeto):
+        pass
+
+    def actualizar(self, objeto):
+        pass
+
+    def eliminar(self, id):
+        pass
+
+    def obtener_tipo_inversor(self, tipo_inversor):
+        pass
+
+    def insertar_inversor(self, id_tipo_inversor, cuit_o_cuil, nombre, apellido, email, contrasena, saldo_inicial):
+        pass
+
+    def obtener_inversor_por_email(self, email):
+        pass
+
+    def obtener_cotizaciones(self):
+        pass

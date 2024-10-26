@@ -1,20 +1,22 @@
 from main import main
 
 def panel_de_control():
-    print("Bienvenido al panel de Control, elija una opcion por favor")
+    print("Bienvenido al panel de Control, elija una opción por favor")
     print("1- Ver mi Saldo.")
     print("2- Historial de transacciones y sus rendimientos.")
     print("3- Comprar.")
     print("4- Vender.")   
-    print("5- Cerrar sesion.")  
+    print("5- Cerrar sesión.")  
 
     salir=False
 
     #todos los print se borran cuando esten llamadas las funciones/metodos
 
+    #todos los print se borran cuando esten llamadas las funciones/metodos
+
     while not salir: 
         #traer datos de inversor
-        opcion_panel= int(input(" Ingrese su opcion: "))
+        opcion_panel= int(input("Ingrese su opción: "))
         if opcion_panel==1:
             #llamar funcion mostrar saldo/total invertidos/rendimiento total
             print ("mostrar saldo/total invertido/rendieminto total")
@@ -34,11 +36,11 @@ def panel_de_control():
         elif opcion_panel ==5: 
             #llamar cerrar sesion
             #volver al menu principal
-            print("Sesion cerrada. Volviendo al menu anterior")
+            print("Sesión cerrada. Volviendo al menu anterior")
             main()
             salir=True
         else: 
-            print("opcion ingresada invalida, intenta nuevamente.")
+            print("Opción ingresada invalida, intentá nuevamente.")
 """
 #probando
 if __name__== "__main__":
