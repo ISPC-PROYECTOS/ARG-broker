@@ -53,6 +53,9 @@ class Portafolio():
             for transaccion in transacciones
         ]
         
+    def mostrar_total_invertido(self, suma_transacciones):
+        return f" Su total invertido es: {suma_transacciones} "
+
     # def calcular_rendimiento(self, transacciones_con_precios):
     #     rendimiento_total = 0
     #     for transaccion in transacciones_con_precios:
