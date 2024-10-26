@@ -37,7 +37,6 @@ class PortafolioDAO(DataAccessDAO):
         finally:
             cursor.close()
 
-    
     def obtener_suma_transacciones(self, cuit_o_cuil):
         cursor = self.connection.cursor()
         try:
