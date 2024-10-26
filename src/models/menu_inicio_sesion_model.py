@@ -12,6 +12,8 @@ def panel_de_control():
 
     #todos los print se borran cuando esten llamadas las funciones/metodos
 
+    #todos los print se borran cuando esten llamadas las funciones/metodos
+
     while not salir: 
         #traer datos de inversor
         opcion_panel= int(input("Ingrese su opción: "))
