@@ -1,10 +1,10 @@
 use brokercba;
 
-INSERT INTO accion (nombre_accion, simbolo_accion)
-VALUES ( "Yacimientos", "YPF"),
-		("Aceitera", "AGD"),
-        ("ArcorArgentina", "ARCOR"),
-        ("Google", "GOO");
+INSERT INTO accion (nombre_accion, simbolo_accion, cantidad_disponible)
+VALUES ( "Yacimientos", "YPF", 100),
+		("Aceitera", "AGD", 58),
+        ("ArcorArgentina", "ARCOR", 125),
+        ("Google", "GOO", 75);
 
 INSERT INTO cotizacion (id_accion, fecha_hora, precio_venta, precio_compra)
 VALUES (1,"2024-10-20 15:20:09.000000", 1.79, 1,89),
