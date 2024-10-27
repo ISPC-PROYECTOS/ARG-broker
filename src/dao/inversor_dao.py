@@ -1,5 +1,6 @@
 from datetime import date
 from src.dao.interface_dao import DataAccessDAO
+from src.models.inversor_model import Inversor
 
 class InversorDAO(DataAccessDAO):
     def __init__(self, connection):
@@ -8,9 +9,9 @@ class InversorDAO(DataAccessDAO):
     def obtener_tipo_inversor(self, tipo_inversor):
         cursor = self.connection.cursor()
         cursor.execute("SELECT id_tipo_inversor FROM tipo_inversor WHERE id_tipo_inversor = %s", (tipo_inversor,))
-        result = cursor.fetchone()
+        resultado = cursor.fetchone()
         cursor.close()
-        return result
+        return resultado
 
     def insertar_inversor(self, id_tipo_inversor, cuit_o_cuil, nombre, apellido, email, contrasena, saldo_inicial):
         cursor = self.connection.cursor()
@@ -20,14 +21,21 @@ class InversorDAO(DataAccessDAO):
         """, (id_tipo_inversor, cuit_o_cuil, nombre, apellido, email, contrasena, date.today(), saldo_inicial))
         self.connection.commit()
         cursor.close()
-
+    
     def obtener_inversor_por_email(self, email):
         cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM inversor WHERE email = %s", (email,))
-        result = cursor.fetchone()
+        cursor.execute("""
+            SELECT id_tipo_inversor, cuit_o_cuil, nombre, apellido, email, contrasena, saldo_inicial
+            FROM inversor
+            WHERE email = %s
+        """, (email,))        
+        resultado = cursor.fetchone()
         cursor.close()
-        return result
-
+        
+        if resultado:
+            return Inversor(*resultado)
+        return None    
+    
     # Implementaciones vacías de los métodos abstractos
     def obtener_todos(self):
         pass
