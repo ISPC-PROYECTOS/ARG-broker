@@ -1,6 +1,5 @@
 from src.dao.portafolio_dao import PortafolioDAO
 from src.util.conexion_bd import obtener_conexion
-from src.dao.inversor_dao import InversorDAO
 
 def panel_de_control(email_inversor, cuit_inversor):
     salir = False
@@ -15,21 +14,39 @@ def panel_de_control(email_inversor, cuit_inversor):
 
         opcion_panel = int(input("Ingrese la opción elegida: "))
         
-        # Abre la conexión a la base de datos
         conexion = obtener_conexion()
         
         if opcion_panel == 1:
             portafolio_dao = PortafolioDAO(conexion)
-            saldo = portafolio_dao.obtener_suma_transacciones(cuit_inversor)  # Usa email_inversor directamente
-            print(f"Saldo total: {saldo}")    
+            saldo = portafolio_dao.obtener_suma_transacciones(cuit_inversor)
+            print(f"Saldo total: {saldo:.2f}")    
 
         elif opcion_panel == 2:
-            # Aquí deberías llamar a la función que muestra el historial de transacciones
-            print("Mostrando historial de transacciones")
+            portafolio_dao = PortafolioDAO(conexion)
+            transacciones = portafolio_dao.obtener_transacciones(cuit_inversor)
+
+            if transacciones:
+                print("\n---- Historial de Transacciones ----")
+                print(f"{'ID':<10} {'Tipo':<10} {'CUIT/CUIL':<15} {'Acción':<15} {'Cantidad':<10} {'Fecha':<20} {'Valor':<10}")
+                print("-" * 90)
+
+                for transaccion in transacciones:
+                    id_transaccion = transaccion['id_num_transaccion']
+                    tipo_transaccion = "Compra" if transaccion['id_tipo_transaccion'] == 1 else "Venta"
+                    cuit_o_cuil = transaccion['cuit_o_cuil']
+                    id_cotizacion = transaccion['id_cotizacion_accion']
+                    cantidad = transaccion['cantidad_acciones_transaccion']
+                    fecha = transaccion['fecha_hora_transaccion'].strftime('%Y-%m-%d %H:%M')
+                    valor = transaccion['valor_transaccion']
+
+                    print(f"{id_transaccion:<10} {tipo_transaccion:<10} {cuit_o_cuil:<15} {id_cotizacion:<15} {cantidad:<10} {fecha:<20} {valor:<10}")
+
+                print("-" * 90)
+            else:
+                print("No hay transacciones para mostrar.")
 
         elif opcion_panel == 3: 
-            # Lógica para comprar
-            print("Comprar acciones")
+            pass
 
         elif opcion_panel == 4: 
             # Lógica para vender
@@ -40,3 +57,6 @@ def panel_de_control(email_inversor, cuit_inversor):
             salir = True  # Salir del panel de control
         else: 
             print("Opción ingresada inválida, intentá nuevamente.")
+        
+        # Cierra la conexión a la base de datos después de usarla
+        conexion.close()
