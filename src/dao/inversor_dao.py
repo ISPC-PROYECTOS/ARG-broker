@@ -29,9 +29,6 @@ class InversorDAO(DataAccessDAO):
         return result
 
     # Implementaciones vacías de los métodos abstractos
-    def obtener(self, email):
-        pass
-
     def obtener_todos(self):
         pass
 
@@ -42,4 +39,16 @@ class InversorDAO(DataAccessDAO):
         pass
 
     def eliminar(self, id):
+        pass
+
+    def obtener_transacciones(self, cuit_o_cuil):
+        pass
+
+    def obtener_suma_transacciones(self, cuit_o_cuil):
+        pass
+
+    def calcular_rendimiento_total(self, cuit_o_cuil):
+        pass
+
+    def obtener_cotizaciones(self):
         pass
