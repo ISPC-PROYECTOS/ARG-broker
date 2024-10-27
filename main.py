@@ -1,4 +1,5 @@
-#importar iniciar sesion,registrar inversor
+from src.modulos_main.iniciar_sesion import iniciar_sesion
+from src.modulos_main.registrar_inversor import registrar_inversor
 
 def main():
     print('-----> MENÚ PRINCIPAL <-----')
@@ -11,11 +12,10 @@ def main():
         
         opcion = int(input('Ingrese la opción elegida: '))
         if opcion == 1:
-            #iniciar_sesion() que va a llamar al modulo panel de control
-            print("da opcion iniciar sesion")
+            iniciar_sesion()            
         elif opcion == 2:
-            #registar_inversor() 
-            print("Da la opcion de regitrar nuevo inversor")
+            registrar_inversor()
+            pass
         elif opcion == 3:
             print("Gracias por usar nuestro programa.\
                   Saliendo de la aplicación.")

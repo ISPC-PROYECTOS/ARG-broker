@@ -1,7 +1,13 @@
 from src.dao.inversor_dao import InversorDAO
-from util.conexion_bd import obtener_conexion
-from util.validaciones import validar_email, validar_contrasena
-from registrar_inversor import solicitar_dato
+from src.util.conexion_bd import obtener_conexion
+from src.util.validaciones import validar_email, validar_contrasena
+
+def solicitar_dato(mensaje, validacion, mensaje_error):
+    dato = input(mensaje)
+    while not validacion(dato):
+        print(mensaje_error)
+        dato = input(mensaje)
+    return dato
 
 def iniciar_sesion():
     conexion = obtener_conexion()

@@ -16,7 +16,8 @@ class CotizacionDAO(DataAccessDAO):
                 "a.simbolo_accion, "
                 "c.fecha_hora, "
                 "c.precio_venta, "
-                "c.precio_compra "
+                "c.precio_compra, "
+                "c.cantidad_disponible "
                 "FROM "
                 "cotizacion c "
                 "JOIN "
@@ -27,7 +28,7 @@ class CotizacionDAO(DataAccessDAO):
             
             cotizaciones = []
             for row in rows:
-                cotizacion = Cotizacion(row[0], row[1], row[2], row[3], row[4])
+                cotizacion = Cotizacion(row[0], row[1], row[2], row[3], row[4], row[5])
                 cotizaciones.append(cotizacion)
             return cotizaciones
         except mysql.connector.Error as error:
@@ -73,10 +74,12 @@ if __name__ == '__main__':
 
         cotizaciones = cotizacion_dao.obtener_cotizaciones()
 
-        print(f"{'Nombre':<35} {'Símbolo':<10} {'Fecha y Hora':<22} {'Precio Venta':<15} {'Precio Compra':<15}")
+        print(f"{'Nombre':<35} {'Símbolo':<10} {'Fecha y Hora':<22} {'Precio Venta':<15} {'Precio Compra':<15} {'Cantidad Disponible':<15}")
         print("=" * 100)
 
+        Cotizacion.mostrar_cotizacion(cotizaciones)
+
         for cotizacion in cotizaciones:
-            print(f"{cotizacion.get_nombre():<35} {cotizacion.get_simbolo():<10} {cotizacion.get_fecha_hora():<22} {cotizacion.get_precio_venta():<15} {cotizacion.get_precio_compra():<15}")
+            print(f"{cotizacion.get_nombre():<35} {cotizacion.get_simbolo():<10} {cotizacion.get_fecha_hora():<22} {cotizacion.get_precio_venta():<15} {cotizacion.get_precio_compra():<15} {cotizacion.get_cantidad_disponible():<15}")
     finally:
         connection.close()

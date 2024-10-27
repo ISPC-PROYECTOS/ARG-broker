@@ -1,6 +1,6 @@
 import datetime
 class Cotizacion:
-    def __init__(self, nombre, simbolo, fecha_hora, precio_venta, precio_compra):
+    def __init__(self, nombre, simbolo, fecha_hora, precio_venta, precio_compra, cantidad_disponible):
         self.__nombre = nombre
         self.__simbolo = simbolo
         if isinstance(fecha_hora, str):
@@ -9,6 +9,7 @@ class Cotizacion:
             self.__fecha_hora = fecha_hora        
         self.__precio_venta = precio_venta
         self.__precio_compra = precio_compra
+        self.__cantidad_disponible = cantidad_disponible
 
     def get_nombre(self):
         return self.__nombre
@@ -40,6 +41,12 @@ class Cotizacion:
     def set_precio_compra(self, precio_compra):
         self.__precio_compra = precio_compra
 
+    def get_cantidad_disponible(self):
+        return self.__cantidad_disponible
+
+    def set_cantidad_disponible(self, cantidad_disponible):
+        self.__cantidad_disponible = cantidad_disponible
+
     def maximo_dia(self):
         pass
 
@@ -53,4 +60,4 @@ class Cotizacion:
         pass
 
     def mostrar_cotizacion(self):
-        return f"Nombre: {self.get_cotizacion()}, Símbolo: {self.get_simbolo()}, Fecha y Hora: {self.get_fecha_hora()}, Precio Venta: {self.get_precio_venta()}, Precio Compra: {self.get_precio_compra()}"
+        return f"Nombre: {self.get_cotizacion()}, Símbolo: {self.get_simbolo()}, Fecha y Hora: {self.get_fecha_hora()}, Precio Venta: {self.get_precio_venta()}, Precio Compra: {self.get_precio_compra()}, Cantidad Disponible: {self.get_cantidad_disponible()}"
