@@ -1,9 +1,9 @@
-from main import main
+from src.dao.portafolio_dao import PortafolioDAO
+from src.util.conexion_bd import obtener_conexion
+from src.dao.inversor_dao import InversorDAO
 
-def panel_de_control():
-    salir=False
-
-    #todos los print se borran cuando esten llamadas las funciones/metodos
+def panel_de_control(email_inversor, cuit_inversor):
+    salir = False
 
     while not salir: 
         print('-----> PANEL DE CONTROL <-----')
@@ -13,33 +13,30 @@ def panel_de_control():
         print("4. Vender.")
         print("5. Cerrar sesión.")  
 
+        opcion_panel = int(input("Ingrese la opción elegida: "))
         
-        opcion_panel= int(input("Ingrese la opción elegida: "))
-        if opcion_panel==1:
-            #llamar funcion mostrar saldo/total invertidos/rendimiento total
-            print ("mostrar saldo/total invertido/rendieminto total")
+        # Abre la conexión a la base de datos
+        conexion = obtener_conexion()
+        
+        if opcion_panel == 1:
+            portafolio_dao = PortafolioDAO(conexion)
+            saldo = portafolio_dao.obtener_suma_transacciones(cuit_inversor)  # Usa email_inversor directamente
+            print(f"Saldo total: {saldo}")    
 
-        if opcion_panel==2:
-            #llamar funcion mostrar historial de transacciones y cotizacion actual compra y venta,mostrando el rendimiento actual
-            print("mostrando historial de transacciones")
+        elif opcion_panel == 2:
+            # Aquí deberías llamar a la función que muestra el historial de transacciones
+            print("Mostrando historial de transacciones")
 
-        if opcion_panel ==3: 
-            #Comprar
+        elif opcion_panel == 3: 
+            # Lógica para comprar
             print("Comprar acciones")
 
-        if opcion_panel ==4: 
-            #Vender
+        elif opcion_panel == 4: 
+            # Lógica para vender
             print("Vender acciones")
             
-        if opcion_panel ==5: 
-            #llamar cerrar sesion
-            #volver al menu principal
-            print("Sesión cerrada. Volviendo al menu anterior")
-            main()
-            salir=True
+        elif opcion_panel == 5: 
+            print("Sesión cerrada. Volviendo al menú anterior")
+            salir = True  # Salir del panel de control
         else: 
-            print("Opción ingresada invalida, intentá nuevamente.")
-"""
-#probando
-if __name__== "__main__":
-    panel_de_control()"""
+            print("Opción ingresada inválida, intentá nuevamente.")
