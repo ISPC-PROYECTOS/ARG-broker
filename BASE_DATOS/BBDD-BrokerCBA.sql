@@ -21,7 +21,7 @@ USE `BrokerCBA` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `BrokerCBA`.`tipo_inversor` (
   `id_tipo_inversor` INT NOT NULL AUTO_INCREMENT,
-  `tipo_inversor` INT NULL,
+  `tipo_inversor` VARCHAR(45) NULL,
   PRIMARY KEY (`id_tipo_inversor`))
 ENGINE = InnoDB;
 
