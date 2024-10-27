@@ -1,5 +1,9 @@
 from src.dao.portafolio_dao import PortafolioDAO
 from src.util.conexion_bd import obtener_conexion
+from src.dao.cotizacion_dao import CotizacionDAO
+from src.models.transaccion_model import Transaccion
+from src.dao.transaccion_dao import TransaccionDAO
+from datetime import datetime
 
 def panel_de_control(email_inversor, cuit_inversor):
     salir = False
@@ -45,18 +49,45 @@ def panel_de_control(email_inversor, cuit_inversor):
             else:
                 print("No hay transacciones para mostrar.")
 
-        elif opcion_panel == 3: 
-            pass
+        elif opcion_panel == 3:
+            cotizacion_dao = CotizacionDAO(conexion)
+            cotizaciones = cotizacion_dao.obtener_cotizaciones()
+
+            print(f"{'Nombre':<40} {'Símbolo':<10} {'Fecha y Hora':<20} {'Precio Venta':<15} {'Precio Compra':<15} {'Cantidad Disponible':<20}")
+            print("=" * 130)
+
+            if cotizaciones:  
+                for cotizacion in cotizaciones:
+                    fecha_hora_str = cotizacion.get_fecha_hora()  
+                    fecha_hora = datetime.strptime(fecha_hora_str, '%Y-%m-%d %H:%M:%S') if isinstance(fecha_hora_str, str) else fecha_hora_str
+                    
+                    print(f"{cotizacion.get_nombre():<40} {cotizacion.get_simbolo():<10} {fecha_hora.strftime('%Y-%m-%d %H:%M:%S'):<20} {cotizacion.get_precio_venta():<15.2f} {cotizacion.get_precio_compra():<15.2f} {cotizacion.get_cantidad_disponible():<20}")
+
+                simbolo = input("Ingrese el símbolo de la acción que desea comprar: ")
+                cantidad = int(input("Ingrese la cantidad de acciones que desea comprar: "))
+
+                portafolio_dao = PortafolioDAO(conexion)
+                saldo_disponible = portafolio_dao.obtener_suma_transacciones(cuit_inversor)
+
+                cotizacion_seleccionada = next((c for c in cotizaciones if c.get_simbolo() == simbolo), None)
+
+                if cotizacion_seleccionada:
+                    transaccion = Transaccion(cotizacion_seleccionada.get_nombre(), 0, cotizacion_seleccionada.get_precio_compra())
+                    resultado_compra = transaccion.comprar(cantidad, saldo_disponible)
+
+                    print(resultado_compra)  
+                else:
+                    print("El símbolo ingresado no corresponde a ninguna cotización disponible.")
+            else:
+                print("No hay cotizaciones disponibles.")   
 
         elif opcion_panel == 4: 
-            # Lógica para vender
             print("Vender acciones")
             
         elif opcion_panel == 5: 
             print("Sesión cerrada. Volviendo al menú anterior")
-            salir = True  # Salir del panel de control
+            salir = True  
         else: 
             print("Opción ingresada inválida, intentá nuevamente.")
         
-        # Cierra la conexión a la base de datos después de usarla
         conexion.close()

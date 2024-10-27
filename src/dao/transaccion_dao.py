@@ -35,6 +35,12 @@ class TransaccionDAO:
             raise error
         finally:
             cursor.close()
-    def obtener_transacciones(self):
-        pass
-    
+
+    def guardar_transaccion(self, tipo_transaccion, cuit_inversor, id_cotizacion, cantidad_acciones, valor_transaccion):
+        with self.conexion.cursor() as cursor:
+            query = """
+            INSERT INTO transaccion (id_tipo_transaccion, cuit_o_cuil, id_cotizacion_accion, cantidad_acciones_transaccion, fecha_hora_transaccion, valor_transaccion, )
+            VALUES (%s, %s, %s, %s, NOW(), %s)
+            """
+            cursor.execute(query, (tipo_transaccion, cuit_inversor, id_cotizacion, cantidad_acciones, valor_transaccion))
+            self.conexion.commit()

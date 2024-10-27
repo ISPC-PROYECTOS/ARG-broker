@@ -60,4 +60,4 @@ class Cotizacion:
         pass
 
     def mostrar_cotizacion(self):
-        return f"Nombre: {self.get_cotizacion()}, Símbolo: {self.get_simbolo()}, Fecha y Hora: {self.get_fecha_hora()}, Precio Venta: {self.get_precio_venta()}, Precio Compra: {self.get_precio_compra()}, Cantidad Disponible: {self.get_cantidad_disponible()}"
+        return f"{self.get_nombre()}, {self.get_simbolo()}, {self.get_fecha_hora()}, {self.get_precio_venta()}, {self.get_precio_compra()}, {self.get_cantidad_disponible()}"
