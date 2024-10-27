@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `BrokerCBA`.`accion` (
   `id_accion` INT NOT NULL AUTO_INCREMENT,
   `nombre_accion` VARCHAR(45) NULL,
   `simbolo_accion` VARCHAR(45) NULL,
+  
   PRIMARY KEY (`id_accion`))
 ENGINE = InnoDB;
 ALTER TABLE `BrokerCBA`.`accion`  
