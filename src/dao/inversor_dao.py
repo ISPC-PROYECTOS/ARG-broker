@@ -1,6 +1,7 @@
 from datetime import date
 from src.dao.interface_dao import DataAccessDAO
 from src.models.inversor_model import Inversor
+from src.util.conexion_bd import obtener_conexion
 
 class InversorDAO(DataAccessDAO):
     def __init__(self, connection):
@@ -33,8 +34,9 @@ class InversorDAO(DataAccessDAO):
         cursor.close()
         
         if resultado:
-            return Inversor(*resultado)
-        return None    
+            inversor = Inversor(*resultado)
+            return inversor
+        return None
     
     # Implementaciones vacías de los métodos abstractos
     def obtener_todos(self):
@@ -60,3 +62,8 @@ class InversorDAO(DataAccessDAO):
 
     def obtener_cotizaciones(self):
         pass
+
+if __name__ == '__main__':
+    connection = obtener_conexion()
+    inversor_dao = InversorDAO(connection)
+    inversor_dao.obtener_inversor_por_email('vpicco@gmail.com')

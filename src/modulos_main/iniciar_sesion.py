@@ -22,10 +22,10 @@ def iniciar_sesion():
         contrasena_registrada = inversor.get_contrasena() 
         if contrasena == contrasena_registrada:
             print(f"Inicio de sesión exitoso. Bienvenido, {inversor.get_nombre()}!")
-            return True
+            return True, inversor.get_correo(), inversor.get_cuit()
         else:
             print("Contraseña incorrecta.")
-            return False
+            return False, None, None
     else:
         print("Email no encontrado.")
-        return False
+        return False, None, None
