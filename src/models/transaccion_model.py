@@ -20,8 +20,6 @@ class Transaccion:
         self.__cantidad_acciones -= cantidad
         self.__precio_venta = precio_venta
         return f"Vendiste {cantidad} acciones de {self.__activo} a {self.__precio_venta} por acción."
-
-   
  
     def get_activo(self):
         return self.__activo
@@ -37,6 +35,3 @@ class Transaccion:
 
     def get_rendimiento(self):
         return self.__rendimiento
-    
-
-if__name__ == "__main__": 

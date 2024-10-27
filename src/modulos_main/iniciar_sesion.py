@@ -18,9 +18,10 @@ def iniciar_sesion():
 
     inversor = inversor_dao.obtener_inversor_por_email(email)
     if inversor:
-        email_registrado, contrasena_registrada = inversor[4], inversor[5]
+        email_registrado = inversor.get_correo()  
+        contrasena_registrada = inversor.get_contrasena() 
         if contrasena == contrasena_registrada:
-            print(f"Inicio de sesión exitoso. Bienvenido, {email_registrado}!")
+            print(f"Inicio de sesión exitoso. Bienvenido, {inversor.get_nombre()}!")
             return True
         else:
             print("Contraseña incorrecta.")
@@ -28,6 +29,3 @@ def iniciar_sesion():
     else:
         print("Email no encontrado.")
         return False
-
-if __name__ == '__main__':
-    iniciar_sesion()
