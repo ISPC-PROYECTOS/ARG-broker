@@ -52,7 +52,6 @@ class PortafolioDAO(DataAccessDAO):
             portafolio = Portafolio()
             saldo_total = portafolio.calcular_saldo_cuenta(suma_transacciones)
             portafolio.mostrar_saldo_cuenta()
-            # portafolio.mostrar_total_invertido()
             
             return saldo_total
         except mysql.connector.Error as error:
