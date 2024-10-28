@@ -33,11 +33,9 @@ class Portafolio():
     def set_rendimiento(self,rendimiento):
         self.__rendimiento=rendimiento
 
-
     def calcular_saldo_cuenta(self, suma_transacciones):
         self.__saldo_cuenta = self.__saldo_inicial + suma_transacciones
-        return self.__saldo_cuenta
-        
+        return self.__saldo_cuenta        
 
     def mostrar_saldo_cuenta(self):
         return f"Saldo de la cuenta: {self.__saldo_cuenta}"
@@ -56,39 +54,6 @@ class Portafolio():
     def mostrar_total_invertido(self, suma_transacciones):
         return f" Su total invertido es: {suma_transacciones} "
 
-    # def calcular_rendimiento(self, transacciones_con_precios):
-    #     rendimiento_total = 0
-    #     for transaccion in transacciones_con_precios:
-    #         cantidad_acciones = transaccion['cantidad_acciones_transaccion']
-    #         valor_transaccion = transaccion['valor_transaccion']
-    #         precio_actual = transaccion['precio_actual']
-    #         tipo_transaccion = transaccion['tipo_transaccion']
-
-    #         if tipo_transaccion == "compra":
-    #             rendimiento_accion = (precio_actual - valor_transaccion) * cantidad_acciones
-    #         elif tipo_transaccion == "venta":
-    #             rendimiento_accion = (valor_transaccion - precio_actual) * cantidad_acciones
-
-    #         rendimiento_total += rendimiento_accion
-
-    #     return rendimiento_total
-
-    # def calcular_rendimiento(self, transacciones):
-    #     rendimiento_total = sum(t['cantidad_acciones_transaccion'] * t['precio_venta'] for t in transacciones)
-    #     return rendimiento_total
-
-    # def calcular_rendimiento(self, transacciones):
-    #     rendimiento_total = 0
-    #     for transaccion in transacciones:
-    #         cantidad_acciones = transaccion['cantidad_acciones_transaccion']
-    #         valor_transaccion = transaccion['valor_transaccion']
-    #         precio_venta = transaccion['precio_venta']
-    #         precio_compra = transaccion['precio_compra']
-            
-    #         rendimiento_accion = (precio_venta - precio_compra) * cantidad_acciones
-    #         rendimiento_total += rendimiento_accion
-    #     return rendimiento_total
-
     def calcular_rendimiento(self, transacciones):
         rendimiento_total = 0
         inversion_inicial_total = 0
@@ -98,14 +63,11 @@ class Portafolio():
             precio_venta = transaccion['precio_venta']
             precio_compra = transaccion['precio_compra']
             
-            # Calculamos la inversión inicial sumando las transacciones de compra
             inversion_inicial_total += precio_compra * cantidad_acciones
             
-            # Calculamos el rendimiento de la transacción
             rendimiento_accion = (precio_venta - precio_compra) * cantidad_acciones
             rendimiento_total += rendimiento_accion
 
-        # Calculamos el rendimiento porcentual
         rendimiento_porcentual = (rendimiento_total / inversion_inicial_total) * 100 if inversion_inicial_total > 0 else 0
         return round(rendimiento_total, 2), round(rendimiento_porcentual, 2)
     

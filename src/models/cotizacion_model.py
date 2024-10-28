@@ -47,17 +47,5 @@ class Cotizacion:
     def set_cantidad_disponible(self, cantidad_disponible):
         self.__cantidad_disponible = cantidad_disponible
 
-    def maximo_dia(self):
-        pass
-
-    def minimo_dia(self):
-        pass
-
-    def ultimo_operado(self):
-        pass
-
-    def ultimo_cierre(self):
-        pass
-
     def mostrar_cotizacion(self):
         return f"{self.get_nombre()}, {self.get_simbolo()}, {self.get_fecha_hora()}, {self.get_precio_venta()}, {self.get_precio_compra()}, {self.get_cantidad_disponible()}"

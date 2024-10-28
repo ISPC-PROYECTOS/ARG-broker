@@ -9,14 +9,12 @@ class Transaccion:
     def comprar(self, cantidad, saldo_disponible):
         if saldo_disponible < cantidad * self.__precio_compra:
             return "No tienes saldo suficiente para realizar la compra."
-        
         self.__cantidad_acciones += cantidad
         return f"Compraste {cantidad} acciones de {self.__activo} a {self.__precio_compra} por acción."
 
     def vender(self, cantidad, precio_venta, cantidad_acciones_disponibles):
         if cantidad > cantidad_acciones_disponibles:
             return "No tienes suficientes acciones para vender."
-        
         self.__cantidad_acciones -= cantidad
         self.__precio_venta = precio_venta
         return f"Vendiste {cantidad} acciones de {self.__activo} a {self.__precio_venta} por acción."
