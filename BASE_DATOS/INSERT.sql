@@ -1,18 +1,18 @@
 use brokercba;
 
 INSERT INTO accion (nombre_accion, simbolo_accion)
-VALUES ( "Yacimientos", "YPF", 100),
-		("Aceitera", "AGD", 25),
-        ("ArcorArgentina", "ARCOR", 48),
-        ("Google", "GOO". 200);
+VALUES ( "Yacimientos", "YPF"),
+		("Aceitera", "AGD"),
+        ("ArcorArgentina", "ARCOR"),
+        ("Google", "GOO");
 
-INSERT INTO cotizacion (id_accion, fecha_hora, precio_venta, precio_compra)
-VALUES (1,"2024-10-20 15:20:09.000000", 1.79, 1,89),
-		(1, "2024-10-20 10:04:12.000000",	1.09,	1.18),
-		(3,	"2024-10-20 10:04:27.000000",	1.09,	1.18),
-		(3,	"2024-10-20 10:36:04.000000",	1.29,	1.38),
-		(2,	"2024-10-20 10:36:29.000000",	2.29,	2.3),
-		(4,	"2024-10-19 10:20:29.000000",	1.3,	1.50);
+INSERT INTO cotizacion (id_accion, fecha_hora, precio_venta, precio_compra, cant_disponible)
+VALUES (1,"2024-10-20 15:20:09.000000", 1.79, 1.89, 200),
+		(1, "2024-10-20 10:04:12.000000",	1.09,	1.18, 150),
+		(3,	"2024-10-20 10:04:27.000000",	1.09,	1.18, 351),
+		(3,	"2024-10-20 10:36:04.000000",	1.29,	1.38, 125),
+		(2,	"2024-10-20 10:36:29.000000",	2.29,	2.3, 20),
+		(4,	"2024-10-19 10:20:29.000000",	1.3,	1.50, 39);
 
 
 INSERT INTO inversor (id_tipo_inversor, cuit_o_cuil, nombre, apellido, email, contrasena, fecha_alta_inversor, saldo_inicial)
@@ -42,4 +42,4 @@ VALUES ( 1, 1.64),
         (4, 3.27);
 	
         
-SELECT * FROM transaccion;
+SELECT * FROM accion;
