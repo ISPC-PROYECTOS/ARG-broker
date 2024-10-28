@@ -38,7 +38,6 @@ class InversorDAO(DataAccessDAO):
             return inversor
         return None
     
-    # Implementaciones vacías de los métodos abstractos
     def obtener_todos(self):
         pass
 
@@ -62,8 +61,3 @@ class InversorDAO(DataAccessDAO):
 
     def obtener_cotizaciones(self):
         pass
-
-if __name__ == '__main__':
-    connection = obtener_conexion()
-    inversor_dao = InversorDAO(connection)
-    inversor_dao.obtener_inversor_por_email('vpicco@gmail.com')

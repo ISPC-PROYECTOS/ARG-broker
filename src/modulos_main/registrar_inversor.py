@@ -31,21 +31,17 @@ def registrar_inversor():
     
     inversor_dao = InversorDAO(conexion)
     try:
-        # Verificar si el tipo de inversor es 0 o 1
         if tipo_persona not in ('0', '1'):
             raise ValueError("El tipo de inversor debe ser 0 o 1")
 
-        # Convertir tipo_inversor a entero
         tipo_persona = int(tipo_persona)
 
-        # Obtener el id_tipo_inversor correspondiente
         result = inversor_dao.obtener_tipo_inversor(tipo_persona)
         if result:
             id_tipo_inversor = result[0]
         else:
             raise ValueError("El tipo de inversor no es válido")
 
-        # Insertar inversor
         inversor_dao.insertar_inversor(id_tipo_inversor, cuit_o_cuil, nombre, apellido, email, contrasena, inversor.get_saldo_inicial())
         print("Inversor registrado con éxito:")
         print(inversor.mostrar_datos())

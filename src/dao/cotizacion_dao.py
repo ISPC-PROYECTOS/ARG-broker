@@ -65,21 +65,3 @@ class CotizacionDAO(DataAccessDAO):
 
     def calcular_rendimiento_total(self, cuit_o_cuil):
         pass
-
-if __name__ == '__main__':
-    connection = obtener_conexion()
-
-    try:
-        cotizacion_dao = CotizacionDAO(connection)
-
-        cotizaciones = cotizacion_dao.obtener_cotizaciones()
-
-        print(f"{'Nombre':<35} {'Símbolo':<10} {'Fecha y Hora':<22} {'Precio Venta':<15} {'Precio Compra':<15} {'Cantidad Disponible':<15}")
-        print("=" * 100)
-
-        Cotizacion.mostrar_cotizacion(cotizaciones)
-
-        for cotizacion in cotizaciones:
-            print(f"{cotizacion.get_nombre():<35} {cotizacion.get_simbolo():<10} {cotizacion.get_fecha_hora():<22} {cotizacion.get_precio_venta():<15} {cotizacion.get_precio_compra():<15} {cotizacion.get_cantidad_disponible():<15}")
-    finally:
-        connection.close()
