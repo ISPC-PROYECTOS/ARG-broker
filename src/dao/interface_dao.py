@@ -38,9 +38,17 @@ class DataAccessDAO(ABC):
         pass
 
     @abstractmethod
-    def calcular_rendimiento_total(self, cuit_o_cuil):
+    def calcular_rendimiento(self, transacciones):
         pass
 
     @abstractmethod
     def obtener_cotizaciones(self):
+        pass
+
+    @abstractmethod
+    def actualizar_cantidad_disponible(self, id_cotizacion, cantidad_a_restar):
+        pass
+
+    @abstractmethod
+    def registrar_transaccion(self, cuit_inversor, simbolo, cantidad, precio_compra):
         pass
