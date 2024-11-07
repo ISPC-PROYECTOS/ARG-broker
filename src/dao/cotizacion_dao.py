@@ -36,6 +36,22 @@ class CotizacionDAO(DataAccessDAO):
         finally:
             cursor.close()
 
+    def actualizar_cantidad_disponible(self, simbolo, cantidad):
+        cursor = self.connection.cursor()
+        try:
+            query = """
+                UPDATE brokercba.cotizacion c
+                JOIN brokercba.accion a ON c.id_accion = a.id_accion
+                SET c.cantidad_disponible = c.cantidad_disponible + %s
+                WHERE a.simbolo_accion = %s
+            """
+            cursor.execute(query, (cantidad, simbolo))
+            self.connection.commit()
+        except mysql.connector.Error as error:
+            print(f"Error al actualizar cantidad disponible: {error}")
+        finally:
+            cursor.close()
+
     def obtener_todos(self):
         pass
 
@@ -63,5 +79,8 @@ class CotizacionDAO(DataAccessDAO):
     def obtener_suma_transacciones(self, cuit_o_cuil):
         pass
 
-    def calcular_rendimiento_total(self, cuit_o_cuil):
+    def calcular_rendimiento(self, cuit_o_cuil):
+        pass
+
+    def registrar_transaccion(self, cuit_inversor, simbolo, cantidad, precio_compra):
         pass

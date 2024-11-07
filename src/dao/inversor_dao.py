@@ -56,8 +56,14 @@ class InversorDAO(DataAccessDAO):
     def obtener_suma_transacciones(self, cuit_o_cuil):
         pass
 
-    def calcular_rendimiento_total(self, cuit_o_cuil):
+    def calcular_rendimiento(self, cuit_o_cuil):
         pass
 
     def obtener_cotizaciones(self):
+        pass
+
+    def actualizar_cantidad_disponible(self, id_cotizacion, cantidad_a_restar):
+        pass
+
+    def registrar_transaccion(self, cuit_inversor, simbolo, cantidad, precio_compra):
         pass

@@ -41,30 +41,37 @@ class PortafolioDAO(DataAccessDAO):
         cursor = self.connection.cursor()
         try:
             query = """
-                SELECT SUM(valor_transaccion) 
+                SELECT id_tipo_transaccion, valor_transaccion 
                 FROM transaccion 
                 WHERE cuit_o_cuil = %s
             """
             cursor.execute(query, (cuit_o_cuil,))
-            row = cursor.fetchone()
-            suma_transacciones = row[0] if row and row[0] is not None else 0
-            
-            portafolio = Portafolio()
+            rows = cursor.fetchall()
+
+            suma_transacciones = 0
+            for row in rows:
+                tipo_transaccion = row[0]
+                valor_transaccion = row[1]
+                
+                if tipo_transaccion == 1:  
+                    suma_transacciones -= valor_transaccion  
+                elif tipo_transaccion == 2:  
+                    suma_transacciones += valor_transaccion  
+
+            portafolio = Portafolio(saldo_inicial=1000000)
             saldo_total = portafolio.calcular_saldo_cuenta(suma_transacciones)
-            portafolio.mostrar_saldo_cuenta()
-            
             return saldo_total
         except mysql.connector.Error as error:
             raise error
         finally:
             cursor.close()
 
-    def calcular_rendimiento_total(self, cuit_o_cuil):
+    def calcular_rendimiento(self, cuit_o_cuil):
         cursor = self.connection.cursor()
         try:
             query = """
                 SELECT t.id_cotizacion_accion, t.cantidad_acciones_transaccion,
-                       t.valor_transaccion, c.precio_venta, c.precio_compra
+                    t.valor_transaccion, c.precio_venta, c.precio_compra
                 FROM brokercba.transaccion t
                 INNER JOIN brokercba.cotizacion c ON t.id_cotizacion_accion = c.id_cotizacion_accion
                 WHERE t.cuit_o_cuil = %s
@@ -72,23 +79,52 @@ class PortafolioDAO(DataAccessDAO):
             cursor.execute(query, (cuit_o_cuil,))
             transacciones_con_precios = cursor.fetchall()
 
-            transacciones = []
-            for row in transacciones_con_precios:
-                transacciones.append({
+            transacciones = [
+                {
                     'id_cotizacion_accion': row[0],
                     'cantidad_acciones_transaccion': row[1],
                     'valor_transaccion': row[2],
                     'precio_venta': row[3],
                     'precio_compra': row[4]
-                })
+                }
+                for row in transacciones_con_precios
+            ]
 
-            portafolio = Portafolio()
+            portafolio = Portafolio(cuit_o_cuil)
             rendimiento_total, rendimiento_porcentual = portafolio.calcular_rendimiento(transacciones)
             print(f"Rendimiento total del portafolio: {rendimiento_total:.2f}")
             print(f"Rendimiento porcentual del portafolio: {rendimiento_porcentual:.2f}%")           
             return rendimiento_total, rendimiento_porcentual
         except mysql.connector.Error as error:
             raise error
+        finally:
+            cursor.close()
+
+    def registrar_transaccion(self, cuit_inversor, simbolo, cantidad, precio_compra):
+        cursor = self.connection.cursor()
+        try:
+            query_accion = "SELECT id_accion FROM brokercba.accion WHERE simbolo_accion = %s"
+            cursor.execute(query_accion, (simbolo,))
+            id_accion = cursor.fetchone()
+
+            if not id_accion:
+                print("No se encontró la acción con el símbolo proporcionado.")
+                return
+
+            id_accion = id_accion[0]
+            
+            query_transaccion = """
+                INSERT INTO brokercba.transaccion (cuit_o_cuil, id_cotizacion_accion, cantidad_acciones_transaccion, valor_transaccion, id_tipo_transaccion)
+                VALUES (%s, %s, %s, %s, %s)
+            """
+            id_tipo_transaccion = 1 
+            valor_transaccion = cantidad * precio_compra  
+            cursor.execute(query_transaccion, (cuit_inversor, id_accion, cantidad, valor_transaccion, id_tipo_transaccion))
+
+            self.connection.commit()
+            print(f"Transacción de compra registrada con éxito para {cantidad} acciones de {simbolo}.")
+        except mysql.connector.Error as error:
+            print(f"Error al registrar la transacción: {error}")
         finally:
             cursor.close()
 
@@ -114,4 +150,7 @@ class PortafolioDAO(DataAccessDAO):
         pass
 
     def obtener_cotizaciones(self):
+        pass
+
+    def actualizar_cantidad_disponible(self, id_cotizacion, cantidad_a_restar):
         pass

@@ -3,6 +3,7 @@ from src.util.conexion_bd import obtener_conexion
 from src.dao.cotizacion_dao import CotizacionDAO
 from src.models.transaccion_model import Transaccion
 from datetime import datetime
+import mysql.connector
 
 
 def mostrar_menu():
@@ -19,7 +20,6 @@ def ver_saldo(conexion, cuit_inversor):
     saldo = portafolio_dao.obtener_suma_transacciones(cuit_inversor)
     print(f"Saldo total: {saldo:.2f}")
 
-
 def ver_historial_transacciones(conexion, cuit_inversor):
     portafolio_dao = PortafolioDAO(conexion)
     transacciones = portafolio_dao.obtener_transacciones(cuit_inversor)
@@ -31,11 +31,23 @@ def ver_historial_transacciones(conexion, cuit_inversor):
 
         for transaccion in transacciones:
             tipo_transaccion = "Compra" if transaccion['id_tipo_transaccion'] == 1 else "Venta"
-            fecha = transaccion['fecha_hora_transaccion'].strftime('%Y-%m-%d %H:%M')
+            
+            fecha = transaccion['fecha_hora_transaccion']
+            if fecha:
+                if isinstance(fecha, datetime):
+                    fecha_formateada = fecha.strftime('%Y-%m-%d %H:%M')
+                else:
+                    fecha_formateada = "Formato de fecha incorrecto"
+            else:
+                fecha_formateada = "Fecha no disponible"  
+            
             print(f"{transaccion['id_num_transaccion']:<10} {tipo_transaccion:<10} {transaccion['cuit_o_cuil']:<15} "
                   f"{transaccion['id_cotizacion_accion']:<15} {transaccion['cantidad_acciones_transaccion']:<10} "
-                  f"{fecha:<20} {transaccion['valor_transaccion']:<10}")
+                  f"{fecha_formateada:<20} {transaccion['valor_transaccion']:<10}")
+        
         print("-" * 90)
+        
+        rendimiento = portafolio_dao.calcular_rendimiento(cuit_inversor)
     else:
         print("No hay transacciones para mostrar.")
 
@@ -69,6 +81,10 @@ def realizar_compra(conexion, cuit_inversor):
         transaccion = Transaccion(cotizacion_seleccionada.get_nombre(), 0, cotizacion_seleccionada.get_precio_compra())
         resultado_compra = transaccion.comprar(cantidad, saldo_disponible)
         print(resultado_compra)
+
+        portafolio_dao.registrar_transaccion(cuit_inversor, simbolo, cantidad, cotizacion_seleccionada.get_precio_compra())
+        
+        cotizacion_dao.actualizar_cantidad_disponible(cotizacion_seleccionada.get_simbolo(), -cantidad)
     else:
         print("El símbolo ingresado no corresponde a ninguna cotización disponible.")
 
